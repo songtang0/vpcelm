@@ -6,7 +6,7 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
-const name = defaultSettings.title || 'vue Admin Template' // page title
+const name = defaultSettings.title || '' // page title
 
 // If your port is set to 80,
 // use administrator privileges to execute the command line.
@@ -40,7 +40,8 @@ module.exports = {
     proxy: {
       "/api": {
         /* 目标代理服务器地址 */
-        target: "http://localhost:3000", //
+        target: "http://localhost:3902", //
+        // target: "http://www.api.songtang.xyz:3902", //
         // target: "http://192.168.1.102:8888", //
         /* 允许跨域 */
         changeOrigin: true,

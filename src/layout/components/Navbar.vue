@@ -57,7 +57,7 @@ export default {
               type: 'success',
               message: '退出成功'
             });
-            this.$router.push('/')
+            this.$router.push('/login')
           } else {
             this.$message({
               type: 'error',
@@ -140,7 +140,7 @@ export default {
           cursor: pointer;
           width: 40px;
           height: 40px;
-          border-radius: 10px;
+          border-radius: 50%;
         }
 
         .el-icon-caret-bottom {

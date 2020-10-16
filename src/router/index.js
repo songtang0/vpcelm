@@ -49,17 +49,54 @@ const constantRoutes = [
       meta: { title: '首页', icon: 'dashboard' }
     }]
   },
-  // {
-  //   path: '/manage',
-  //   component: Layout,
-  //   redirect: '/manage/home',
-  //   children: [{
-  //     path: 'home',
-  //     name: 'home',
-  //     component: () => import('@/views/Index/index'),
-  //     meta: { title: '首页', icon: 'dashboard' }
-  //   }]
-  // },
+  {
+    path: '/manage',
+    component: Layout,
+    redirect: '/manage/userlist',
+    meta: { title: '数据管理', icon: 'el-icon-document' },
+    name: 'Manage',
+    children: [
+      {
+        path: 'userlist',
+        name: 'UserList',
+        component: () => import('@/views/manageList/userList'),
+        meta: { title: '用户列表', icon: 'dashboard' }
+      },
+      {
+        path: 'adminlist',
+        name: 'AdminList',
+        component: () => import('@/views/manageList/adminList'),
+        meta: { title: '管理员列表', icon: 'dashboard' }
+      },
+      {
+        path: 'shoplist',
+        name: 'ShopList',
+        component: () => import('@/views/manageList/shopList'),
+        meta: { title: '商家列表', icon: 'dashboard' }
+      },
+    ]
+  },
+  {
+    path: '/push',
+    component: Layout,
+    redirect: '/push/addshop',
+    meta: { title: '添加数据', icon: 'el-icon-document' },
+    name: 'Push',
+    children: [
+      {
+        path: 'addshop',
+        name: 'AddShop',
+        component: () => import('@/views/manageList/addShop'),
+        meta: { title: '添加店铺', icon: 'dashboard' }
+      },
+      {
+        path: 'shoplist',
+        name: 'ShopList',
+        component: () => import('@/views/manageList/shopList'),
+        meta: { title: '商家列表', icon: 'dashboard' }
+      },
+    ]
+  },
   {
     path: '/form',
     component: Layout,

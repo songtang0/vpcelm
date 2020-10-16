@@ -1,15 +1,15 @@
 <template>
     <el-upload class="avatar-uploader"
-               action="http://localhost:3000/v1/uploadImg" :show-file-list="false"
+               action="http://localhost:3902/v1/uploadImg" :show-file-list="false"
                :on-success="handleShopAvatarSuccess"
                :before-upload="beforeAvatarUpload">
-        <img v-if="imgUrl" class="avatar" :src="baseImgPath + imgUrl" alt="">
+        <img v-if="imgUrl" class="avatar" :src="userImgPath + imgUrl" alt="">
         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
     </el-upload>
 </template>
 
 <script>
-    import {baseImgPath} from '../utils/env';
+    import {userImgPath} from '../utils/env';
     export default {
         name: "uploadImg",
         props:{
@@ -18,7 +18,7 @@
         data () {
             return {
                 imgUrl: this.imageUrl,
-                baseImgPath
+                userImgPath
             }
         },
         methods: {

@@ -18,8 +18,10 @@
             <el-input v-model="loginForm.captcha" placeholder="请输入验证码"
                       class="captcha" size="small">
             </el-input>
-            <img class="captcha-img" src="http://localhost:3000/v1/captcha" alt=""
+            <img class="captcha-img" src="https://songtang.xyz/nelm/v1/captcha" alt=""
                  ref="captcha" @click="changeImg">
+<!--            <img class="captcha-img" src="http://localhost:3902/v1/captcha" alt=""-->
+<!--                 ref="captcha" @click="changeImg">-->
           </el-form-item>
           <el-form-item>
             <el-button @click="submitLogin('loginFormDom')" type="primary" class="submit-btn">登录</el-button>
@@ -63,12 +65,21 @@ export default {
     ...mapState(['adminInfo'])
   },
   mounted() {
+      // const params = {
+      //     page: 1,
+      //     size: 10
+      // }
+      // getAdminList(params).then(res => {
+      //     console.log('数据来了=========')
+      //     console.log(res)
+      //     console.log('数据来了=========')
+      // })
   },
   methods: {
     ...mapActions(['getAdminInfos']),
     // 点击登录
     submitLogin(formName) {
-      const inFifteenMinutes = new Date(new Date().getTime() + 60 * 60 * 1000)
+      const inFifteenMinutes = new Date(new Date().getTime() + 60 * 60 * 24 * 1000)
       const data = {
         username: this.loginForm.username,
         password: this.loginForm.password,
@@ -105,7 +116,8 @@ export default {
 
     // 更换验证码
     changeImg() {
-      this.$refs.captcha.src = 'http://localhost:3000/v1/captcha?date=' + new Date()
+      this.$refs.captcha.src = 'https://songtang.xyz/nelm/v1/captcha?date=' + new Date()
+      // this.$refs.captcha.src = 'http://localhost:3902/v1/captcha?date=' + new Date()
     },
 
     // 检查是否已经登录
@@ -115,7 +127,7 @@ export default {
           type: 'success',
           message: '检测到您之前登录过，将自动登录.'
         })
-        this.$router.replace('/manage')
+        this.$router.replace('/')
       }
     }
   }

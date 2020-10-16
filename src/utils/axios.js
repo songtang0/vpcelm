@@ -1,12 +1,23 @@
 import axios from 'axios';
-const baseURL = '/api';
+// const baseURL = '/api';
 import qs from 'qs';
 import { MessageBox } from 'element-ui';
 import router from '../router/index';
 import Cookies from 'js-cookie';
 
+const env = process.env.NODE_ENV; // 判断是生产环境还是开发环境
+// let baseURL = env === 'development' ? '/api' : 'http://api.songtang.xyz:3902';
+let baseURL = env === 'development' ? '/api' : 'https://songtang.xyz/nelm';
+console.log(baseURL);
+
+const instance = axios.create({
+    baseURL,
+    timeout: 2000,
+});
+
 // 添加请求拦截器，在发送请求之前做些什么(**具体查看axios文档**)--------
-axios.interceptors.request.use(function (config) {
+instance.interceptors.request.use(function (config) {
+    config.headers.captcha = Cookies.get('cap');
     config.headers.authorization =  Cookies.get("adminToken");// 判断是否存在token，如果存在的话，则每个http header都加上token
     return config;
 }, function (error) {
@@ -15,7 +26,7 @@ axios.interceptors.request.use(function (config) {
 });
 
 // 添加响应拦截器(**具体查看axios文档**)----------------------------------------------------------------
-axios.interceptors.response.use(function (response) {
+instance.interceptors.response.use(function (response) {
     // 对响应数据做点什么，允许在数据返回客户端前，修改响应的数据
     // 如果只需要返回体中数据，则如下，如果需要全部，则 return response 即可
     const res = response.data;
@@ -26,8 +37,9 @@ axios.interceptors.response.use(function (response) {
             {confirmButtonText: '重新登录', type: 'info', center: true, showClose: false, showCancelButton: false}
         ).then(() => {
             Cookies.remove('adminToken');
+            Cookies.remove('sidebarStatus');
             sessionStorage.removeItem('vuex');
-            router.push('/')
+            router.push('/login')
         })
     }
     return response.data
@@ -62,7 +74,8 @@ function $axios (url, params, method) {
     method = method && method.toUpperCase();
     let httpDefault = {
         method: method || 'GET',
-        baseURL: baseURL,
+        withCredentials:true,
+        // baseURL: baseURL,
         url: url,
         // `params` 是即将与请求一起发送的 URL 参数
         // `data` 是作为请求主体被发送的数据
@@ -73,7 +86,7 @@ function $axios (url, params, method) {
     // 注意**Promise**使用(Promise首字母大写)
     return new Promise((resolve, reject) => {
         // 此处的.then属于axios
-        axios(httpDefault)
+        instance(httpDefault)
             .then(res => {
                 // successState(res);
                 resolve(res)
